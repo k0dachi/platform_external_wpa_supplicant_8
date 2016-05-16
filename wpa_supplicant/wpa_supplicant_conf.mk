@@ -20,7 +20,11 @@ LOCAL_MODULE_PATH := $(TARGET_OUT_ETC)/wifi
 
 include $(BUILD_SYSTEM)/base_rules.mk
 
-WPA_SUPPLICANT_CONF_TEMPLATE := $(LOCAL_PATH)/wpa_supplicant_template.conf
+ifeq ($(TARGET_DEVICE),bullhead)
+    WPA_SUPPLICANT_CONF_TEMPLATE := $(LOCAL_PATH)/wpa_supplicant_template_no_randomization.conf
+else
+    WPA_SUPPLICANT_CONF_TEMPLATE := $(LOCAL_PATH)/wpa_supplicant_template.conf
+endif
 WPA_SUPPLICANT_CONF_SCRIPT := $(LOCAL_PATH)/wpa_supplicant_conf.sh
 $(LOCAL_BUILT_MODULE): PRIVATE_WIFI_DRIVER_SOCKET_IFACE := $(WIFI_DRIVER_SOCKET_IFACE)
 $(LOCAL_BUILT_MODULE): PRIVATE_WPA_SUPPLICANT_CONF_TEMPLATE := $(WPA_SUPPLICANT_CONF_TEMPLATE)
